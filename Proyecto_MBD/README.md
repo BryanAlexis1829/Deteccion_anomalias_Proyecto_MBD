@@ -85,6 +85,84 @@ Proyecto_MBD/
 
 ---
 
+## Estructura de la carpeta data/
+
+La carpeta `data/` **no está incluida en el repositorio** por contener archivos de gran tamaño. Debe recrearse manualmente siguiendo esta estructura antes de ejecutar el pipeline:
+
+```
+data/
+├── raw/
+│   └── train_test_network.csv          # Dataset reducido para pruebas rápidas (opcional)
+│
+├── processed/                          # << COLOCAR AQUÍ los 23 CSV descargados de Drive
+│   ├── Network_dataset_1.csv
+│   ├── Network_dataset_2.csv
+│   ├── ...
+│   ├── Network_dataset_23.csv
+│   │
+│   │   # Los siguientes archivos son GENERADOS automáticamente por el notebook 02:
+│   ├── network_full_consolidated.parquet
+│   ├── network_full_clean.parquet
+│   └── network_full_sample.parquet
+│
+└── artifacts/
+    │   # Generados por el notebook 02 (preprocessing):
+    ├── feature_encoders.pkl
+    ├── feature_encoders_binary.pkl
+    │
+    │   # Generados por los notebooks 03 (entrenamiento muestra):
+    ├── rf_binary.pkl
+    ├── rf_multiclass.pkl
+    │
+    └── full/                           # Artefactos del pipeline completo (23 CSV)
+        │
+        │   # Generados por notebook 02 — splits estratificados:
+        ├── X_train_full_binary.parquet
+        ├── X_test_full_binary.parquet
+        ├── X_train_full_multiclass.parquet
+        ├── X_test_full_multiclass.parquet
+        ├── y_train_full_binary.csv
+        ├── y_test_full_binary.csv
+        ├── y_train_full_multiclass.csv
+        ├── y_test_full_multiclass.csv
+        ├── scaler_binary_full.pkl
+        ├── scaler_multiclass_full.pkl
+        ├── reporte_nulos_dataset_full.xlsx
+        ├── resumen_imputacion_dataset_full.xlsx
+        │
+        │   # Generados por notebooks 03 — modelos entrenados:
+        ├── rf_binary_full.pkl
+        ├── rf_multiclass_full.pkl
+        ├── xgb_binary_full.pkl
+        ├── xgb_multiclass_full.pkl
+        ├── lgb_binary_full.pkl
+        ├── lgb_multiclass_full.pkl
+        │
+        │   # Generados por notebooks 05 y 06 — redes neuronales:
+        ├── dnn_binary_full.keras
+        ├── dnn_multiclass_full.keras
+        │
+        │   # Generados por notebook 04 — métricas y predicciones:
+        ├── binary_model_results_full.csv
+        ├── multiclass_model_results_full.csv
+        ├── rf_predictions_full.csv
+        ├── xgb_predictions_full.csv
+        ├── lgb_predictions_full.csv
+        ├── dnn_binary_predictions_full.csv
+        ├── dnn_multiclass_predictions_full.csv
+        │
+        │   # Generados por notebook 07 — análisis SHAP:
+        ├── shap_feature_importance_full_xgb.csv
+        │
+        │   # Generados por notebook 08 — resumen global:
+        ├── global_results_summary.csv
+        └── evaluation_summary_full.csv
+```
+
+> Los archivos marcados como **GENERADOS** se crean al ejecutar el pipeline en orden. Solo es necesario descargar y colocar los 23 CSV manualmente.
+
+---
+
 ## Dataset
 
 | Propiedad | Detalle |
@@ -96,6 +174,10 @@ Proyecto_MBD/
 | Registros totales | ~22,338,021 |
 | Muestra EDA | 5% (~1.1M registros) para análisis exploratorio |
 | Muestra SHAP | 1,000 registros para análisis de interpretabilidad |
+
+Los 23 CSVs **no están incluidos en el repositorio** por superar el límite de tamaño de GitHub (cada archivo pesa entre 49–165 MB). Deben descargarse por separado y colocarse manualmente en `data/processed/` antes de ejecutar el pipeline.
+
+**Descarga de datos:** [Google Drive — Network Dataset (23 CSV)](https://drive.google.com/drive/folders/1s-w9K1GnVyZF7TktFGkS9HvUpZaXmR15?usp=drive_link)
 
 Los 23 CSVs se consolidan durante el paso de preprocessing en un único Parquet (`network_full_consolidated.parquet`). Los pasos posteriores leen únicamente ese archivo.
 
