@@ -1,0 +1,32 @@
+# Datos y modelos entrenados (archivos grandes)
+**/data/data_folder/
+**/data/processed/
+**/data/artifacts/
+
+# Archivos de datos por extensión
+*.csv
+*.parquet
+*.pkl
+*.h5
+*.hdf5
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.ipynb_checkpoints/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Entornos virtuales
+venv/
+env/
+.env
+.venv/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
