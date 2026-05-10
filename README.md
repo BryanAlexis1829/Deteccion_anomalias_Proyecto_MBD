@@ -159,7 +159,7 @@ data/
         └── evaluation_summary_full.csv
 ```
 
-> Los archivos marcados como **GENERADOS** se crean al ejecutar el pipeline en orden. Solo es necesario descargar y colocar los 23 CSV manualmente.
+> **Lo único que debes colocar manualmente son los 23 CSV en `data/processed/`.** Todo el contenido de `data/artifacts/` se genera automáticamente y de forma progresiva a medida que ejecutas los notebooks en orden: al correr el notebook 02 se crean los splits y encoders, al correr el 03 aparecen los modelos de árbol, al correr el 05 y 06 los modelos DNN, y así sucesivamente. No es necesario crear ninguna subcarpeta — `utils/config.py` las crea automáticamente al importarse.
 
 ---
 
@@ -172,7 +172,7 @@ data/
 | Target binario | `label` — `0`: normal · `1`: ataque |
 | Target multiclase | `type` — 10 categorías de ataque |
 | Registros totales | ~22,338,021 |
-| Muestra EDA | 5% (~1.1M registros) para análisis exploratorio |
+| Muestra EDA | 10% (~2.2M registros) para análisis exploratorio |
 | Muestra SHAP | 1,000 registros para análisis de interpretabilidad |
 
 Los 23 CSVs **no están incluidos en el repositorio** por superar el límite de tamaño de GitHub (cada archivo pesa entre 49–165 MB). Deben descargarse por separado y colocarse manualmente en `data/processed/` antes de ejecutar el pipeline.
